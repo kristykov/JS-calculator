@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Inria Sans", sans-serif;
 }
 
 :root {
@@ -17,6 +20,10 @@
   --small-font-size: 12px;
 }
 
+body {
+  // font-family: "Inria Sans", sans-serif;
+}
+
 section {
   height: 100vh;
   display: flex;
@@ -24,9 +31,19 @@ section {
 }
 
 .calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0 auto;
   width: 440px;
   height: 660px;
+  background: rgb(45, 68, 97);
+  background: linear-gradient(
+    43deg,
+    rgba(45, 68, 97, 1) 0%,
+    rgba(30, 41, 60, 1) 100%
+  );
+  border-radius: 20px;
 
   &-display {
     height: 230px;
@@ -34,7 +51,68 @@ section {
   }
 
   &-controls {
+    display: grid;
     height: 430px;
-    padding: 10px;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+    grid-template-columns: repeat(6, 50px);
+    grid-template-rows: minmax(50px, auto) repeat(5, 50px);
   }
+}
+
+.btn {
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+
+  &-row {
+    grid-column: span 2;
+  }
+
+  &-col {
+    grid-row: span 2;
+  }
+
+  &-contrast-font {
+    color: var(--yellow-color);
+  }
+
+  &-oragne-bg {
+    background: linear-gradient(
+      90deg,
+      rgba(253, 193, 33, 1) 0%,
+      rgba(250, 135, 17, 1) 100%
+    );
+  }
+
+  &-blue-bg {
+    background: linear-gradient(
+      270deg,
+      rgba(66, 157, 255, 1) 0%,
+      rgba(55, 231, 242, 1) 100%
+    );
+  }
+
+  &-svg {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+  }
+
+  &-back {
+    background-image: url("./assets/delete-left.svg");
+    background-size: 21px 19px;
+  }
+
+  &-return {
+    background-image: url("./assets/arrow-rotate-left.svg");
+    background-size: 18px 18px;
+  }
+}
+
+.btn-back {
+  background-image: url("./assets/delete-left.svg");
 }
