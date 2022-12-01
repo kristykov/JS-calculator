@@ -11,44 +11,83 @@
       <div class="calculator">
         <div class="calculator-display"></div>
         <div class="calculator-controls">
-          <button class="btn btn-contrast-font">mc</button>
-          <button class="btn">m+</button>
-          <button class="btn">m-</button>
-          <button class="btn">mr</button>
+          <button class="btn btn-regular btn-contrast-font">mc</button>
+          <button class="btn btn-regular">m+</button>
+          <button class="btn btn-regular">m-</button>
+          <button class="btn btn-regular">mr</button>
           <button class="btn btn-oragne-bg">
-            <img src="./assets/delete-left.svg" alt="" />
+            <svg
+              class="btn-back-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 576 512"
+            >
+              <path
+                d="M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
+              />
+            </svg>
           </button>
-          <button class="btn btn-blue-bg">+/-</button>
-          <button class="btn">x<span>y</span></button>
-          <button class="btn">7</button>
-          <button class="btn">8</button>
-          <button class="btn">9</button>
+          <button class="btn btn-blue-bg"><sup>+</sup>/-</button>
+          <button class="btn btn-regular">x<sup>y</sup></button>
+          <button class="btn btn-regular">7</button>
+          <button class="btn btn-regular">8</button>
+          <button class="btn btn-regular">9</button>
           <button class="btn btn-blue-bg">-</button>
           <button class="btn btn-blue-bg">/</button>
-          <button class="btn">x<span>3</span></button>
-          <button class="btn">4</button>
-          <button class="btn">5</button>
-          <button class="btn">6</button>
+          <button class="btn btn-regular">x<sup>3</sup></button>
+          <button class="btn btn-regular">4</button>
+          <button class="btn btn-regular">5</button>
+          <button class="btn btn-regular">6</button>
           <button class="btn btn-col btn-oragne-bg">+</button>
           <button class="btn btn-blue-bg">*</button>
-          <button class="btn">x<span>2</span></button>
-          <button class="btn">1</button>
-          <button class="btn">2</button>
-          <button class="btn">3</button>
+          <button class="btn btn-regular">x<sup>2</sup></button>
+          <button class="btn btn-regular">1</button>
+          <button class="btn btn-regular">2</button>
+          <button class="btn btn-regular">3</button>
           <button class="btn btn-blue-bg">%</button>
-          <button class="btn">x!</button>
-          <button class="btn">0</button>
-          <button class="btn">.</button>
-          <button class="btn btn-contrast-font">C</button>
+          <button class="btn btn-regular">x!</button>
+          <button class="btn btn-regular">0</button>
+          <button class="btn btn-regular">.</button>
+          <button class="btn btn-regular btn-contrast-font">C</button>
           <button class="btn btn-row btn-oragne-bg">=</button>
-          <button class="btn"><span>2</span>root<span>x</span></button>
-          <button class="btn"><span>3</span>root<span>x</span></button>
-          <button class="btn"><span>y</span>root<span>x</span></button>
-          <button class="btn"><span>1</span>/<span>x</span></button>
-          <button class="btn">10<span>x</span></button>
-          <button>return</button>
+          <button class="btn btn-regular">
+            <sup class="superscript-root">2</sup><span>&radic;</span
+            ><span>x</span>
+          </button>
+          <button class="btn btn-regular">
+            <sup class="superscript-root">3</sup><span>&radic;</span
+            ><span>x</span>
+          </button>
+          <button class="btn btn-regular">
+            <sup class="superscript-root">y</sup><span>&radic;</span
+            ><span>x</span>
+          </button>
+          <button class="btn btn-regular"><sup>1</sup>/<span>x</span></button>
+          <button class="btn btn-regular">10<sup>x</sup></button>
+          <button class="btn btn-regular">
+            <svg
+              class="btn-return-icon"
+              id="back-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"
+              />
+            </svg>
+          </button>
         </div>
-        <div class="theme-change"></div>
+        <div class="theme-change-switcher">
+          <input type="checkbox" class="switch" />
+          <svg
+            class="theme-picture"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z"
+            />
+          </svg>
+        </div>
       </div>
     </section>
     <script src="./index.js" type="module"></script>
