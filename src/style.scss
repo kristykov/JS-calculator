@@ -46,9 +46,14 @@ section {
   border-radius: 20px;
 
   &-display {
+    display: flex;
+    align-items: center;
+    justify-content: end;
     width: 100%;
     height: 230px;
-    padding: 10px;
+    padding: 20px;
+    font-size: var(--big-font-size);
+    color: var(--yellow-color);
   }
 
   &-controls {
@@ -142,11 +147,21 @@ section {
 
 .theme-picture {
   position: absolute;
-  bottom: 13px;
+
   left: 13px;
-  width: 16px;
   height: 18px;
   filter: var(--filter-orange);
+}
+
+.picture-dark {
+  bottom: 13px;
+  width: 16px;
+}
+
+.picture-light {
+  width: 18px;
+  top: 13px;
+  left: 11px;
 }
 
 .switch {
@@ -167,6 +182,7 @@ section {
     border-radius: 50%;
     width: 24px;
     height: 24px;
+    z-index: 10;
     cursor: pointer;
     background: var(--orange-color);
     transform: translateY(0px);
@@ -182,6 +198,12 @@ section {
 .calculator.light-theme {
   background: linear-gradient(205.25deg, #f6f9fc 0.82%, #c7e1fd 114.37%),
     #2d4461;
+}
+
+.light-theme .calculator {
+  &-display {
+    color: var(--orange-color);
+  }
 }
 
 .light-theme .btn {
