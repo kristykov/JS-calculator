@@ -58,6 +58,42 @@ class Calculator {
     this.getOperationTwoOperators(validatedOperation);
   }
 
+  getOperationOneOperator(operation) {
+    let res;
+    const curr = parseFloat(this.currentOperand);
+    console.log(operation);
+    if (isNaN(curr)) {
+      return;
+    }
+    switch (operation.trim()) {
+      case "x<sup>3</sup>":
+        res = curr ** 3;
+        break;
+      case "x<sup>2</sup>":
+        res = curr ** 2;
+        break;
+      case "x!":
+        res = curr ** 2;
+        break;
+      case '<sup class="superscript-root">2</sup><span>√</span><span>x</span>':
+        res = curr ** 2;
+        break;
+      case '<sup class="superscript-root">3</sup><span>√</span><span>x</span>':
+        res = curr ** 2;
+        break;
+      case "<sup>1</sup>/<span>x</span>":
+        res = curr ** 2;
+        break;
+      case "10<sup>x</sup>":
+        res = curr ** 2;
+        break;
+      default:
+        return;
+    }
+    this.currentOperand = res;
+    console.log("RES:", res);
+  }
+
   getOperationTwoOperators(operation) {
     if (!this.currentOperand) {
       return;
@@ -135,6 +171,8 @@ const numberBtns = document.querySelectorAll(".btn-num");
 const clearBtn = document.querySelector(".btn-clear");
 const operationBtnsTwoOperators = document.querySelectorAll(".btn-operation");
 const equalsBtn = document.querySelector(".btn-equals");
+const operationBtnsOneOperator =
+  document.querySelectorAll(".btn-operation-one");
 
 const calculator = new Calculator(currentOperandEl);
 calculator.clear();
@@ -146,10 +184,17 @@ numberBtns.forEach((button) => {
   });
 });
 
+operationBtnsOneOperator.forEach((button) => {
+  button.addEventListener("click", () => {
+    calculator.getOperationOneOperator(button.innerHTML);
+    calculator.updateUi();
+  });
+});
+
 operationBtnsTwoOperators.forEach((button) => {
   button.addEventListener("click", () => {
     calculator.operationValidation(button.innerHTML);
-    // calculator.getOperationTwoOperators(button.innerHTML);
+    calculator.getOperationTwoOperators(button.innerHTML);
     calculator.updateUi();
   });
 });
