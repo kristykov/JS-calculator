@@ -44,15 +44,6 @@ class Calculator {
     }
 
     this.currentOperand += num.toString();
-    // if (this.currentOperand === 0) {
-    //   this.currentOperand = num;
-    //   return;
-    // }
-    // this.currentOperand = this.currentOperand.toString() + num.toString();
-    // if (this.leftOperand !== 0) {
-    //   this.rightOperand = this.currentOperand;
-    //   console.log("works");
-    // }
   }
 
   operationValidation(operation) {
@@ -68,39 +59,38 @@ class Calculator {
   }
 
   getOperationTwoOperators(operation) {
-    console.log("operation:", operation);
-    // this.currentOperand += operation;
+    if (!this.currentOperand) {
+      return;
+    }
     if (this.leftOperand === "" && this.rightOperand === "") {
       this.leftOperand = this.currentOperand;
       this.currentOperand += operation;
-      //   console.log("left assigned");
     } else if (this.leftOperand !== "" && this.rightOperand === "") {
-      console.log("Curr:", this.currentOperand);
       this.rightOperand = this.currentOperand.slice(
-        this.leftOperand.length + 1,
+        this.leftOperand.toString().length + 1,
       );
-      //   console.log(this.rightOperand);
+      if (!this.rightOperand) {
+        return;
+      }
       this.compute();
       this.currentOperand += operation;
     }
     this.operation = operation;
-
-    // this.currentOperand += operation;
     this.updateUi();
-
-    // if (this.leftOperand !== "") {
-    //   this.rightOperand = this.currentOperand;
-    // }
-    // this.compute();
   }
 
   compute() {
     let res;
+    if (this.rightOperand === "") {
+      this.rightOperand = this.currentOperand.slice(
+        this.leftOperand.toString().length + 1,
+      );
+    }
     const prev = parseFloat(this.leftOperand);
     const curr = parseFloat(this.rightOperand);
-    console.log("left", this.leftOperand);
-    console.log("right", this.rightOperand);
-    console.log("operation", this.operation);
+    if (!prev || !curr) {
+      return;
+    }
 
     switch (this.operation) {
       case "+":
@@ -116,12 +106,9 @@ class Calculator {
         res = prev / curr;
         break;
       case "^":
-        console.log("works");
         res = prev ** curr;
         break;
       case '<sup class="superscript-root"/>y</sup><span>√</span><span>x</span>':
-        console.log("works");
-
         res = prev / curr;
         break;
       default:
@@ -130,9 +117,10 @@ class Calculator {
     this.currentOperand = res;
     this.leftOperand = res;
     this.rightOperand = "";
-    // console.log("left", this.leftOperand);
-    // console.log("right", this.rightOperand);
-    // console.log("operation", this.operation);
+  }
+
+  equal() {
+    this.leftOperand = "";
   }
 
   updateUi() {
@@ -146,6 +134,7 @@ const currentOperandEl = document.querySelector(".calculator-current-operand");
 const numberBtns = document.querySelectorAll(".btn-num");
 const clearBtn = document.querySelector(".btn-clear");
 const operationBtnsTwoOperators = document.querySelectorAll(".btn-operation");
+const equalsBtn = document.querySelector(".btn-equals");
 
 const calculator = new Calculator(currentOperandEl);
 calculator.clear();
@@ -163,6 +152,12 @@ operationBtnsTwoOperators.forEach((button) => {
     // calculator.getOperationTwoOperators(button.innerHTML);
     calculator.updateUi();
   });
+});
+
+equalsBtn.addEventListener("click", () => {
+  calculator.compute();
+  calculator.equal();
+  calculator.updateUi();
 });
 
 clearBtn.addEventListener("click", () => {

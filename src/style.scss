@@ -73,7 +73,7 @@ section {
   border: none;
   border-radius: 20px;
   color: #fff;
-  transition: all 0.4s;
+  transition: box-shadow 0.4s;
 
   &-regular {
     background: rgba(0, 0, 0, 0.25);
@@ -186,7 +186,7 @@ section {
     cursor: pointer;
     background: var(--orange-color);
     transform: translateY(0px);
-    transition: all 0.4s;
+    transition: transform 0.4s;
   }
 
   &:checked::after {
