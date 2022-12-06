@@ -1,4 +1,5 @@
 import "./style.scss";
+import factorial from "./factorial";
 
 /*= =========  Light theme ========== */
 
@@ -61,8 +62,8 @@ class Calculator {
   getOperationOneOperator(operation) {
     let res;
     const curr = parseFloat(this.currentOperand);
-    console.log(operation);
-    if (isNaN(curr)) {
+    console.log(operation.trim());
+    if (Number.isNaN(curr)) {
       return;
     }
     switch (operation.trim()) {
@@ -72,26 +73,34 @@ class Calculator {
       case "x<sup>2</sup>":
         res = curr ** 2;
         break;
+      case "%":
+        res = curr / 100;
+        break;
+      case "<sup>+</sup>/-":
+        res = curr > 0 ? -curr : Math.abs(curr);
+        break;
       case "x!":
-        res = curr ** 2;
+        res = factorial(curr);
         break;
       case '<sup class="superscript-root">2</sup><span>√</span><span>x</span>':
-        res = curr ** 2;
+        res = Math.sqrt(curr);
         break;
       case '<sup class="superscript-root">3</sup><span>√</span><span>x</span>':
-        res = curr ** 2;
+        res = Math.cbrt(curr);
         break;
       case "<sup>1</sup>/<span>x</span>":
-        res = curr ** 2;
+        res = 1 / curr;
         break;
       case "10<sup>x</sup>":
-        res = curr ** 2;
+        res = 10 ** curr;
         break;
       default:
         return;
     }
+    if (res.toString().length > 5) {
+      res = res.toFixed(5);
+    }
     this.currentOperand = res;
-    console.log("RES:", res);
   }
 
   getOperationTwoOperators(operation) {
