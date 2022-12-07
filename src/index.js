@@ -110,8 +110,8 @@ class Calculator {
       default:
         return;
     }
-    if (res.toString().length > 5 && res < 0) {
-      res = res.toFixed(5);
+    if (res.toString().length > 5 || res % 1 !== 0) {
+      res = res.toFixed(7);
     } else if (res === Infinity) {
       res = "Error";
     }
@@ -193,6 +193,48 @@ class Calculator {
     this.leftOperand = "";
   }
 
+  addMemoryItem() {
+    let newMemoryItem;
+    if (!localStorage.getItem("memoryItem")) {
+      localStorage.setItem("memoryItem", this.currentOperand);
+    } else {
+      newMemoryItem =
+        Number(localStorage.getItem("memoryItem")) +
+        Number(this.currentOperand);
+      localStorage.setItem("memoryItem", newMemoryItem);
+    }
+    this.currentOperand = "";
+  }
+
+  subMemoryItem() {
+    let newMemoryItem;
+    if (!localStorage.getItem("memoryItem")) {
+      localStorage.setItem(
+        "memoryItem",
+        this.currentOperand > 0
+          ? -this.currentOperand
+          : Math.abs(this.currentOperand),
+      );
+    } else {
+      newMemoryItem =
+        Number(localStorage.getItem("memoryItem")) -
+        Number(this.currentOperand);
+      localStorage.setItem("memoryItem", newMemoryItem);
+    }
+    this.currentOperand = "";
+  }
+
+  getMemoryItem() {
+    this.currentOperand = localStorage.getItem("memoryItem");
+    this.updateUi();
+    this.currentOperand = "";
+  }
+
+  cleanMemory() {
+    localStorage.removeItem("memoryItem");
+    this.currentOperand = "";
+  }
+
   updateUi() {
     // if(this.currentOperand.length < 20) {
     //   this.currentOperandEl.
@@ -216,6 +258,10 @@ const operationBtnsTwoOperators = document.querySelectorAll(".btn-operation");
 const equalsBtn = document.querySelector(".btn-equals");
 const operationBtnsOneOperator =
   document.querySelectorAll(".btn-operation-one");
+const addMemoryBtn = document.querySelector(".btn-memory-add");
+const subMemoryBtn = document.querySelector(".btn-memory-sub");
+const readMemoryBtn = document.querySelector(".btn-memory-read");
+const cleanMemoryBtn = document.querySelector(".btn-memory-clear");
 
 const calculator = new Calculator(currentOperandEl);
 calculator.clear();
@@ -246,6 +292,22 @@ equalsBtn.addEventListener("click", () => {
   calculator.compute();
   calculator.equal();
   calculator.updateUi();
+});
+
+addMemoryBtn.addEventListener("click", () => {
+  calculator.addMemoryItem();
+});
+
+subMemoryBtn.addEventListener("click", () => {
+  calculator.subMemoryItem();
+});
+
+readMemoryBtn.addEventListener("click", () => {
+  calculator.getMemoryItem();
+});
+
+cleanMemoryBtn.addEventListener("click", () => {
+  calculator.cleanMemory();
 });
 
 clearBtn.addEventListener("click", () => {
