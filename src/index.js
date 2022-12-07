@@ -31,6 +31,9 @@ class Calculator {
     this.currentOperand = "";
     this.leftOperand = "";
     this.operation = undefined;
+    if (this.currentOperandEl.classList.contains("medium-font")) {
+      this.currentOperandEl.classList.remove("medium-font");
+    }
     this.updateUi();
   }
 
@@ -43,8 +46,15 @@ class Calculator {
       this.currentOperand = num;
       return;
     }
+    if (this.currentOperand.includes("√")) {
+      this.currentOperand = num.toString() + this.currentOperand;
+      return;
+    }
 
     this.currentOperand += num.toString();
+    if (this.currentOperand.length > 16) {
+      this.currentOperand = this.currentOperand.slice(0, 16);
+    }
   }
 
   operationValidation(operation) {
@@ -52,7 +62,7 @@ class Calculator {
     if (operation.includes("<sup>y")) {
       validatedOperation = "^";
     } else if (operation.includes("<span>√")) {
-      validatedOperation = "root";
+      validatedOperation = "√";
     } else {
       validatedOperation = operation;
     }
@@ -62,7 +72,6 @@ class Calculator {
   getOperationOneOperator(operation) {
     let res;
     const curr = parseFloat(this.currentOperand);
-    console.log(operation.trim());
     if (Number.isNaN(curr)) {
       return;
     }
@@ -80,7 +89,11 @@ class Calculator {
         res = curr > 0 ? -curr : Math.abs(curr);
         break;
       case "x!":
-        res = factorial(curr);
+        try {
+          res = factorial(curr);
+        } catch (e) {
+          console.log(e);
+        }
         break;
       case '<sup class="superscript-root">2</sup><span>√</span><span>x</span>':
         res = Math.sqrt(curr);
@@ -97,9 +110,12 @@ class Calculator {
       default:
         return;
     }
-    if (res.toString().length > 5) {
+    if (res.toString().length > 5 && res < 0) {
       res = res.toFixed(5);
+    } else if (res === Infinity) {
+      res = "Error";
     }
+
     this.currentOperand = res;
   }
 
@@ -109,7 +125,11 @@ class Calculator {
     }
     if (this.leftOperand === "" && this.rightOperand === "") {
       this.leftOperand = this.currentOperand;
-      this.currentOperand += operation;
+      if (operation !== "√") {
+        this.currentOperand += operation;
+      } else {
+        this.currentOperand = `√${this.currentOperand.toString()}`;
+      }
     } else if (this.leftOperand !== "" && this.rightOperand === "") {
       this.rightOperand = this.currentOperand.slice(
         this.leftOperand.toString().length + 1,
@@ -126,10 +146,15 @@ class Calculator {
 
   compute() {
     let res;
+
+    if (this.currentOperand.includes("√")) {
+      this.rightOperand = this.leftOperand;
+      this.leftOperand = this.currentOperand.slice(0, this.rightOperand.length);
+    }
     if (this.rightOperand === "") {
-      this.rightOperand = this.currentOperand.slice(
-        this.leftOperand.toString().length + 1,
-      );
+      this.rightOperand = this.currentOperand
+        .toString()
+        .slice(this.leftOperand.length + 1);
     }
     const prev = parseFloat(this.leftOperand);
     const curr = parseFloat(this.rightOperand);
@@ -153,8 +178,8 @@ class Calculator {
       case "^":
         res = prev ** curr;
         break;
-      case '<sup class="superscript-root"/>y</sup><span>√</span><span>x</span>':
-        res = prev / curr;
+      case "√":
+        res = curr ** (1 / prev);
         break;
       default:
         return;
@@ -169,7 +194,16 @@ class Calculator {
   }
 
   updateUi() {
-    if (this.currentOperand !== 0) {
+    // if(this.currentOperand.length < 20) {
+    //   this.currentOperandEl.
+    // }
+    if (this.currentOperand === undefined) {
+      this.currentOperand = "Error";
+    }
+    if (this.currentOperand.toString().length > 7) {
+      this.currentOperandEl.classList.add("medium-font");
+    }
+    if (this.currentOperand !== "" || this.currentOperand !== "Error") {
       this.currentOperandEl.innerText = this.currentOperand;
     }
   }
@@ -203,7 +237,7 @@ operationBtnsOneOperator.forEach((button) => {
 operationBtnsTwoOperators.forEach((button) => {
   button.addEventListener("click", () => {
     calculator.operationValidation(button.innerHTML);
-    calculator.getOperationTwoOperators(button.innerHTML);
+    // calculator.getOperationTwoOperators(button.innerHTML);
     calculator.updateUi();
   });
 });
