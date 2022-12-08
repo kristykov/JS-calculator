@@ -38,15 +38,26 @@ class Calculator {
   }
 
   addNumber(num) {
-    if (num === "." && this.currentOperand.toString().includes(".")) {
+    if (
+      num === "." &&
+      (this.currentOperand.toString()[
+        this.currentOperand.toString().length - 1
+      ] === "." ||
+        this.currentOperand.toString()[
+          this.currentOperand.toString().length - 2
+        ] === ".")
+    ) {
       return;
     }
+    // if (num === "." && this.currentOperand.toString().includes(".")) { // case 3.2 + 2.2
+    //   return; // but ..... should not be
+    // }
 
     if (this.currentOperand === "") {
       this.currentOperand = num;
       return;
     }
-    if (this.currentOperand.includes("√")) {
+    if (this.currentOperand.toString().includes("√")) {
       this.currentOperand = num.toString() + this.currentOperand;
       return;
     }
@@ -158,7 +169,8 @@ class Calculator {
     }
     const prev = parseFloat(this.leftOperand);
     const curr = parseFloat(this.rightOperand);
-    if (!prev || !curr) {
+
+    if (prev === "" || curr === "") {
       return;
     }
 
@@ -173,7 +185,11 @@ class Calculator {
         res = prev * curr;
         break;
       case "/":
-        res = prev / curr;
+        if (curr !== 0) {
+          res = prev / curr;
+        } else {
+          res = "Error";
+        }
         break;
       case "^":
         res = prev ** curr;
@@ -236,9 +252,6 @@ class Calculator {
   }
 
   updateUi() {
-    // if(this.currentOperand.length < 20) {
-    //   this.currentOperandEl.
-    // }
     if (this.currentOperand === undefined) {
       this.currentOperand = "Error";
     }
@@ -283,7 +296,6 @@ operationBtnsOneOperator.forEach((button) => {
 operationBtnsTwoOperators.forEach((button) => {
   button.addEventListener("click", () => {
     calculator.operationValidation(button.innerHTML);
-    // calculator.getOperationTwoOperators(button.innerHTML);
     calculator.updateUi();
   });
 });
