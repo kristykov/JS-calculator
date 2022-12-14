@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import "./style.scss";
 import AddCommand from "./commands/addCommand";
 import SubtractCommand from "./commands/subtractCommand";
@@ -54,11 +53,7 @@ class Calculator {
 
   executeCommand(command) {
     this.history.push(this.currentOperand);
-    this.currentOperand = command.execute();
-  }
-
-  undo() {
-    console.log(this.history);
+    this.currentOperand = parseFloat(command.execute().toPrecision(12));
   }
 
   addNumber(num) {
@@ -260,6 +255,13 @@ class Calculator {
     this.currentOperand = "";
   }
 
+  deletePrevSymbol() {
+    if (this.currentOperand) {
+      this.currentOperand = this.currentOperand.slice(0, -1);
+      this.updateUi();
+    }
+  }
+
   cleanMemory() {
     localStorage.removeItem("memoryItem");
     this.currentOperand = "";
@@ -289,6 +291,7 @@ const addMemoryBtn = document.querySelector(".btn-memory-add");
 const subMemoryBtn = document.querySelector(".btn-memory-sub");
 const readMemoryBtn = document.querySelector(".btn-memory-read");
 const cleanMemoryBtn = document.querySelector(".btn-memory-clear");
+const backSpaceBtn = document.querySelector(".btn-backspace");
 
 const calculator = new Calculator(currentOperandEl);
 calculator.clear();
@@ -334,6 +337,10 @@ readMemoryBtn.addEventListener("click", () => {
 
 cleanMemoryBtn.addEventListener("click", () => {
   calculator.cleanMemory();
+});
+
+backSpaceBtn.addEventListener("click", () => {
+  calculator.deletePrevSymbol();
 });
 
 clearBtn.addEventListener("click", () => {
