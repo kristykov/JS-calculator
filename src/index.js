@@ -1,5 +1,20 @@
+// eslint-disable-next-line max-classes-per-file
 import "./style.scss";
-import factorial from "./factorial";
+import AddCommand from "./commands/addCommand";
+import SubtractCommand from "./commands/subtractCommand";
+import MultiplyCommand from "./commands/multiplyCommand";
+import DivideCommand from "./commands/devideCommand";
+import PowerCommand from "./commands/powerCommand";
+import TakeRootCommand from "./commands/takeRootCommand";
+import PowerThreeCommand from "./commands/powerThreeCommand";
+import PowerTwoCommand from "./commands/powerTwoCommand";
+import PercentCommand from "./commands/percentCommand";
+import SignChangeCommand from "./commands/signChangeCommand";
+import FactorialCommand from "./commands/factorialCommand";
+import SquareRootCommand from "./commands/squareRootCommand";
+import CubeRootCommand from "./commands/cubeRootCommand";
+import MultiInverseCommand from "./commands/multiInverseCommand";
+import PowerTenCommand from "./commands/powerTenCommand";
 
 /*= =========  Light theme ========== */
 
@@ -17,14 +32,14 @@ themeSwitcher.addEventListener("click", () => {
 /*= =========  Calculator ========== */
 
 class Calculator {
-  currentOperand = "";
-
   rightOperand = "";
 
   leftOperand = "";
 
   constructor(currentOperandEl) {
     this.currentOperandEl = currentOperandEl;
+    this.currentOperand = "";
+    this.history = [];
   }
 
   clear() {
@@ -35,6 +50,15 @@ class Calculator {
       this.currentOperandEl.classList.remove("medium-font");
     }
     this.updateUi();
+  }
+
+  executeCommand(command) {
+    this.history.push(this.currentOperand);
+    this.currentOperand = command.execute();
+  }
+
+  undo() {
+    console.log(this.history);
   }
 
   addNumber(num) {
@@ -49,9 +73,6 @@ class Calculator {
     ) {
       return;
     }
-    // if (num === "." && this.currentOperand.toString().includes(".")) { // case 3.2 + 2.2
-    //   return; // but ..... should not be
-    // }
 
     if (this.currentOperand === "") {
       this.currentOperand = num;
@@ -81,53 +102,49 @@ class Calculator {
   }
 
   getOperationOneOperator(operation) {
-    let res;
     const curr = parseFloat(this.currentOperand);
     if (Number.isNaN(curr)) {
       return;
     }
     switch (operation.trim()) {
       case "x<sup>3</sup>":
-        res = curr ** 3;
+        this.executeCommand(new PowerThreeCommand(curr));
         break;
       case "x<sup>2</sup>":
-        res = curr ** 2;
+        this.executeCommand(new PowerTwoCommand(curr));
         break;
       case "%":
-        res = curr / 100;
+        this.executeCommand(new PercentCommand(curr));
         break;
       case "<sup>+</sup>/-":
-        res = curr > 0 ? -curr : Math.abs(curr);
+        this.executeCommand(new SignChangeCommand(curr));
         break;
       case "x!":
-        try {
-          res = factorial(curr);
-        } catch (e) {
-          console.log(e);
-        }
+        this.executeCommand(new FactorialCommand(curr));
         break;
       case '<sup class="superscript-root">2</sup><span>√</span><span>x</span>':
-        res = Math.sqrt(curr);
+        this.executeCommand(new SquareRootCommand(curr));
         break;
       case '<sup class="superscript-root">3</sup><span>√</span><span>x</span>':
-        res = Math.cbrt(curr);
+        this.executeCommand(new CubeRootCommand(curr));
         break;
       case "<sup>1</sup>/<span>x</span>":
-        res = 1 / curr;
+        this.executeCommand(new MultiInverseCommand(curr));
         break;
       case "10<sup>x</sup>":
-        res = 10 ** curr;
+        this.executeCommand(new PowerTenCommand(curr));
         break;
       default:
         return;
     }
-    if (res.toString().length > 5 || res % 1 !== 0) {
-      res = res.toFixed(7);
-    } else if (res === Infinity) {
-      res = "Error";
+    if (this.currentOperand === Infinity) {
+      this.currentOperand = "Error";
+    } else if (
+      this.currentOperand.toString().length > 5 ||
+      this.currentOperand % 1 !== 0
+    ) {
+      this.currentOperand = this.currentOperand.toFixed(7);
     }
-
-    this.currentOperand = res;
   }
 
   getOperationTwoOperators(operation) {
@@ -156,8 +173,6 @@ class Calculator {
   }
 
   compute() {
-    let res;
-
     if (this.currentOperand.includes("√")) {
       this.rightOperand = this.leftOperand;
       this.leftOperand = this.currentOperand.slice(0, this.rightOperand.length);
@@ -176,32 +191,31 @@ class Calculator {
 
     switch (this.operation) {
       case "+":
-        res = prev + curr;
+        this.executeCommand(new AddCommand(prev, curr));
         break;
       case "-":
-        res = prev - curr;
+        this.executeCommand(new SubtractCommand(prev, curr));
         break;
       case "*":
-        res = prev * curr;
+        this.executeCommand(new MultiplyCommand(prev, curr));
         break;
       case "/":
         if (curr !== 0) {
-          res = prev / curr;
+          this.executeCommand(new DivideCommand(prev, curr));
         } else {
-          res = "Error";
+          this.currentOperand = "Error";
         }
         break;
       case "^":
-        res = prev ** curr;
+        this.executeCommand(new PowerCommand(prev, curr));
         break;
       case "√":
-        res = curr ** (1 / prev);
+        this.executeCommand(new TakeRootCommand(prev, curr));
         break;
       default:
         return;
     }
-    this.currentOperand = res;
-    this.leftOperand = res;
+    this.leftOperand = this.currentOperand;
     this.rightOperand = "";
   }
 
