@@ -2,7 +2,7 @@ import "./style.scss";
 import AddCommand from "./commands/addCommand";
 import SubtractCommand from "./commands/subtractCommand";
 import MultiplyCommand from "./commands/multiplyCommand";
-import DivideCommand from "./commands/devideCommand";
+import DivideCommand from "./commands/divideCommand";
 import PowerCommand from "./commands/powerCommand";
 import TakeRootCommand from "./commands/takeRootCommand";
 import PowerThreeCommand from "./commands/powerThreeCommand";
@@ -17,15 +17,17 @@ import PowerTenCommand from "./commands/powerTenCommand";
 
 /*= =========  Light theme ========== */
 
-const calculatorEl = document.querySelector(".calculator");
-const themeSwitcher = document.querySelector(".switch");
+document.addEventListener("DOMContentLoaded", () => {
+  const calculatorEl = document.querySelector(".calculator");
+  const themeSwitcher = document.querySelector(".switch");
 
-themeSwitcher.addEventListener("click", () => {
-  if (themeSwitcher.checked === true) {
-    calculatorEl.classList.add("light-theme");
-  } else {
-    calculatorEl.classList.remove("light-theme");
-  }
+  themeSwitcher.addEventListener("click", () => {
+    if (themeSwitcher.checked === true) {
+      calculatorEl.classList.add("light-theme");
+    } else {
+      calculatorEl.classList.remove("light-theme");
+    }
+  });
 });
 
 /*= =========  Calculator ========== */
@@ -280,70 +282,77 @@ class Calculator {
   }
 }
 
-const currentOperandEl = document.querySelector(".calculator-current-operand");
-const numberBtns = document.querySelectorAll(".btn-num");
-const clearBtn = document.querySelector(".btn-clear");
-const operationBtnsTwoOperators = document.querySelectorAll(".btn-operation");
-const equalsBtn = document.querySelector(".btn-equals");
-const operationBtnsOneOperator =
-  document.querySelectorAll(".btn-operation-one");
-const addMemoryBtn = document.querySelector(".btn-memory-add");
-const subMemoryBtn = document.querySelector(".btn-memory-sub");
-const readMemoryBtn = document.querySelector(".btn-memory-read");
-const cleanMemoryBtn = document.querySelector(".btn-memory-clear");
-const backSpaceBtn = document.querySelector(".btn-backspace");
+export default Calculator;
 
-const calculator = new Calculator(currentOperandEl);
-calculator.clear();
+document.addEventListener("DOMContentLoaded", () => {
+  const currentOperandEl = document.querySelector(
+    ".calculator-current-operand",
+  );
+  const numberBtns = document.querySelectorAll(".btn-num");
+  const clearBtn = document.querySelector(".btn-clear");
+  const operationBtnsTwoOperators = document.querySelectorAll(".btn-operation");
+  const equalsBtn = document.querySelector(".btn-equals");
+  const operationBtnsOneOperator =
+    document.querySelectorAll(".btn-operation-one");
+  const addMemoryBtn = document.querySelector(".btn-memory-add");
+  const subMemoryBtn = document.querySelector(".btn-memory-sub");
+  const readMemoryBtn = document.querySelector(".btn-memory-read");
+  const cleanMemoryBtn = document.querySelector(".btn-memory-clear");
+  const backSpaceBtn = document.querySelector(".btn-backspace");
 
-numberBtns.forEach((button) => {
-  button.addEventListener("click", () => {
-    calculator.addNumber(button.innerText);
-    calculator.updateUi();
-  });
-});
-
-operationBtnsOneOperator.forEach((button) => {
-  button.addEventListener("click", () => {
-    calculator.getOperationOneOperator(button.innerHTML);
-    calculator.updateUi();
-  });
-});
-
-operationBtnsTwoOperators.forEach((button) => {
-  button.addEventListener("click", () => {
-    calculator.operationValidation(button.innerHTML);
-    calculator.updateUi();
-  });
-});
-
-equalsBtn.addEventListener("click", () => {
-  calculator.compute();
-  calculator.equal();
-  calculator.updateUi();
-});
-
-addMemoryBtn.addEventListener("click", () => {
-  calculator.addMemoryItem();
-});
-
-subMemoryBtn.addEventListener("click", () => {
-  calculator.subMemoryItem();
-});
-
-readMemoryBtn.addEventListener("click", () => {
-  calculator.getMemoryItem();
-});
-
-cleanMemoryBtn.addEventListener("click", () => {
-  calculator.cleanMemory();
-});
-
-backSpaceBtn.addEventListener("click", () => {
-  calculator.deletePrevSymbol();
-});
-
-clearBtn.addEventListener("click", () => {
+  const calculator = new Calculator(currentOperandEl);
   calculator.clear();
-  calculator.updateUi();
+
+  // document.addEventListener("DOMContentLoaded", () => {
+  numberBtns.forEach((button) => {
+    button.addEventListener("click", () => {
+      calculator.addNumber(button.innerText);
+      calculator.updateUi();
+    });
+  });
+
+  operationBtnsOneOperator.forEach((button) => {
+    button.addEventListener("click", () => {
+      calculator.getOperationOneOperator(button.innerHTML);
+      calculator.updateUi();
+    });
+  });
+
+  operationBtnsTwoOperators.forEach((button) => {
+    button.addEventListener("click", () => {
+      calculator.operationValidation(button.innerHTML);
+      calculator.updateUi();
+    });
+  });
+
+  equalsBtn.addEventListener("click", () => {
+    calculator.compute();
+    calculator.equal();
+    calculator.updateUi();
+  });
+
+  addMemoryBtn.addEventListener("click", () => {
+    calculator.addMemoryItem();
+  });
+
+  subMemoryBtn.addEventListener("click", () => {
+    calculator.subMemoryItem();
+  });
+
+  readMemoryBtn.addEventListener("click", () => {
+    calculator.getMemoryItem();
+  });
+
+  cleanMemoryBtn.addEventListener("click", () => {
+    calculator.cleanMemory();
+  });
+
+  backSpaceBtn.addEventListener("click", () => {
+    calculator.deletePrevSymbol();
+  });
+
+  clearBtn.addEventListener("click", () => {
+    calculator.clear();
+    calculator.updateUi();
+  });
 });
