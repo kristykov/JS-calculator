@@ -36,12 +36,18 @@ following the order of operations with multiplication done before addition.
 
 ## Directory layout
                                
-    ├── coverage                # Jest coverage files
-    ├── dist                    # Compiled files   
-    ├── src                     # Source files 
-    │   ├── assets              # Asset files
-    │   ├── commands            # Modules for math commands
-    │   ├── tests               # Unit tests for each math command
+    ├── coverage                                   # Jest coverage files
+    ├── dist                                       # Compiled files   
+    ├── src                                        # Source files 
+    │   ├── assets                                 # Asset files
+    │   ├── core                                   # Core logic files
+    │   │    ├── commands                          # All math commands
+    │   │    │   ├── addCommand                    # Math command files
+    │   │    │   │  ├── addCommand.js              # Module for a math command
+    │   │    │   │  └── addCommand.test.js         # Unit test for a math command
+    │   │    │   ...    
+    │   │    ├── calc.js 
+    │   │    └── constants.js 
     │   ├── index.html          
     │   ├── index.js
     └── └── style.scss 
