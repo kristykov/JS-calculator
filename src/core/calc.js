@@ -26,12 +26,10 @@ class Calculator {
     this.history = [];
   }
 
-  #executeCommand(command) {
-    this.history.push(this.currentOperand);
-    this.currentOperand = parseFloat(command.execute().toPrecision(12));
-  }
-
   setCurrentOperand(num) {
+    if (this.currentOperand === "Error") {
+      return;
+    }
     if (
       num === "." &&
       (this.currentOperand.toString()[
@@ -55,7 +53,7 @@ class Calculator {
 
     this.currentOperand += num.toString();
     if (this.currentOperand.length > MAX_LENGTH_OF_CALC_DISPLAY) {
-      this.currentOperand = this.currentOperand.slice(0, 16);
+      this.currentOperand = this.currentOperand.toString().slice(0, 16);
     }
   }
 
@@ -105,6 +103,11 @@ class Calculator {
     }
   }
 
+  #executeCommand(command) {
+    this.history.push(this.currentOperand);
+    this.currentOperand = parseFloat(command.execute().toPrecision(12));
+  }
+
   setOperandsForOperation(operation, sign) {
     if (!this.currentOperand && !this.leftOperand) {
       return;
@@ -117,9 +120,9 @@ class Calculator {
       this.leftOperand = this.currentOperand;
       this.#setSign(sign);
     } else if (this.leftOperand !== "" && this.rightOperand === "") {
-      this.rightOperand = this.currentOperand.slice(
-        this.leftOperand.toString().length + 1,
-      );
+      this.rightOperand = this.currentOperand
+        .toString()
+        .slice(this.leftOperand.toString().length + 1);
       if (!this.rightOperand) {
         return;
       }
@@ -144,10 +147,9 @@ class Calculator {
   compute() {
     if (this.currentOperand.includes("√")) {
       this.rightOperand = this.leftOperand;
-      this.leftOperand = this.currentOperand.slice(
-        0,
-        this.rightOperand.toString().length,
-      );
+      this.leftOperand = this.currentOperand
+        .toString()
+        .slice(0, this.rightOperand.toString().length);
     }
     if (this.rightOperand === "") {
       this.rightOperand = this.currentOperand
@@ -228,14 +230,16 @@ class Calculator {
   }
 
   getMemoryItem() {
-    this.currentOperand = localStorage.getItem("memoryItem");
-    this.renderUi();
-    this.currentOperand = "";
+    if (localStorage.getItem("memoryItem")) {
+      this.currentOperand = localStorage.getItem("memoryItem");
+      this.renderUi();
+      this.currentOperand = "";
+    }
   }
 
   deletePrevSymbol() {
-    if (this.currentOperand) {
-      this.currentOperand = this.currentOperand.slice(0, -1);
+    if (this.currentOperand && this.currentOperand !== "Error") {
+      this.currentOperand = this.currentOperand.toString().slice(0, -1);
       this.renderUi();
     }
   }

@@ -1,9 +1,7 @@
 import "./style.scss";
 import Calculator from "./core/calc";
 
-/*= =========  Light theme ========== */
-
-document.addEventListener("DOMContentLoaded", () => {
+function initTheme() {
   const calculatorEl = document.querySelector(".calculator");
   const themeSwitcher = document.querySelector(".switch");
 
@@ -16,32 +14,30 @@ document.addEventListener("DOMContentLoaded", () => {
       calculatorEl.classList.add("dark-theme");
     }
   });
-});
+}
 
-/*= =========  Calculator ========== */
-
-document.addEventListener("DOMContentLoaded", () => {
-  const currentOperandEl = document.querySelector(
-    ".calculator-current-operand",
+function initCalc() {
+  const calculator = new Calculator(
+    document.querySelector(".calculator-current-operand"),
   );
-  const clearBtn = document.querySelector(".btn-clear");
-  const equalsBtn = document.querySelector(".btn-equals");
-  const addMemoryBtn = document.querySelector(".btn-memory-add");
-  const subMemoryBtn = document.querySelector(".btn-memory-sub");
-  const readMemoryBtn = document.querySelector(".btn-memory-read");
-  const cleanMemoryBtn = document.querySelector(".btn-memory-clear");
-  const backSpaceBtn = document.querySelector(".btn-backspace");
 
   const calcContainer = document.querySelector(".calculator");
-
-  const calculator = new Calculator(currentOperandEl);
-  calculator.clear();
-
   calcContainer.addEventListener("click", (e) => {
     const cell = e.target.closest("button");
     if (!cell) return;
     if (cell.dataset.type === "num") {
       calculator.setCurrentOperand(e.target.innerText);
+      calculator.renderUi();
+    } else if (cell.dataset.operation && cell.dataset.operation === "equals") {
+      calculator.compute();
+      calculator.clearCurrentOperand();
+    } else if (
+      cell.dataset.operation &&
+      cell.dataset.operation === "backspace"
+    ) {
+      calculator.deletePrevSymbol();
+    } else if (cell.dataset.operation && cell.dataset.operation === "clear") {
+      calculator.clear();
       calculator.renderUi();
     } else if (cell.dataset.operation && cell.dataset.operands === "one") {
       calculator.chooseOperationWithOneOperand(cell.dataset.operation);
@@ -50,36 +46,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const operationSign = cell.innerText;
       calculator.setOperandsForOperation(cell.dataset.operation, operationSign);
       calculator.renderUi();
+    } else if (
+      cell.dataset.operation &&
+      cell.dataset.operation === "memory-add"
+    ) {
+      calculator.addMemoryItem();
+    } else if (
+      cell.dataset.operation &&
+      cell.dataset.operation === "memory-sub"
+    ) {
+      calculator.subMemoryItem();
+    } else if (
+      cell.dataset.operation &&
+      cell.dataset.operation === "memory-read"
+    ) {
+      calculator.getMemoryItem();
+    } else if (
+      cell.dataset.operation &&
+      cell.dataset.operation === "memory-clear"
+    ) {
+      calculator.cleanMemory();
     }
   });
+}
 
-  equalsBtn.addEventListener("click", () => {
-    calculator.compute();
-    calculator.clearCurrentOperand();
-  });
-
-  addMemoryBtn.addEventListener("click", () => {
-    calculator.addMemoryItem();
-  });
-
-  subMemoryBtn.addEventListener("click", () => {
-    calculator.subMemoryItem();
-  });
-
-  readMemoryBtn.addEventListener("click", () => {
-    calculator.getMemoryItem();
-  });
-
-  cleanMemoryBtn.addEventListener("click", () => {
-    calculator.cleanMemory();
-  });
-
-  backSpaceBtn.addEventListener("click", () => {
-    calculator.deletePrevSymbol();
-  });
-
-  clearBtn.addEventListener("click", () => {
-    calculator.clear();
-    calculator.renderUi();
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  initCalc();
 });

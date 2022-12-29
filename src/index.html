@@ -17,13 +17,20 @@
             <div class="left-container">
               <div class="memory-container">
                 <button
-                  class="btn btn-regular btn-contrast-font btn-memory-clear"
+                  class="btn btn-regular btn-contrast-font"
+                  data-operation="memory-clear"
                 >
                   mc
                 </button>
-                <button class="btn btn-regular btn-memory-add">m+</button>
-                <button class="btn btn-regular btn-memory-sub">m-</button>
-                <button class="btn btn-regular btn-memory-read">mr</button>
+                <button class="btn btn-regular" data-operation="memory-add">
+                  m+
+                </button>
+                <button class="btn btn-regular" data-operation="memory-sub">
+                  m-
+                </button>
+                <button class="btn btn-regular" data-operation="memory-read">
+                  mr
+                </button>
               </div>
               <div class="input-container">
                 <button
@@ -33,15 +40,9 @@
                 >
                   x<sup>y</sup>
                 </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  7
-                </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  8
-                </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  9
-                </button>
+                <button class="btn btn-regular" data-type="num">7</button>
+                <button class="btn btn-regular" data-type="num">8</button>
+                <button class="btn btn-regular" data-type="num">9</button>
                 <button
                   class="btn btn-regular"
                   data-operation="third-power"
@@ -49,15 +50,9 @@
                 >
                   x<sup>3</sup>
                 </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  4
-                </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  5
-                </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  6
-                </button>
+                <button class="btn btn-regular" data-type="num">4</button>
+                <button class="btn btn-regular" data-type="num">5</button>
+                <button class="btn btn-regular" data-type="num">6</button>
                 <button
                   class="btn btn-regular"
                   data-operation="second-power"
@@ -65,15 +60,9 @@
                 >
                   x<sup>2</sup>
                 </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  1
-                </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  2
-                </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  3
-                </button>
+                <button class="btn btn-regular" data-type="num">1</button>
+                <button class="btn btn-regular" data-type="num">2</button>
+                <button class="btn btn-regular" data-type="num">3</button>
                 <button
                   class="btn btn-regular"
                   data-operation="factorial"
@@ -81,20 +70,19 @@
                 >
                   x!
                 </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  0
-                </button>
-                <button class="btn btn-regular btn-num" data-type="num">
-                  .
-                </button>
-                <button class="btn btn-regular btn-contrast-font btn-clear">
+                <button class="btn btn-regular" data-type="num">0</button>
+                <button class="btn btn-regular" data-type="num">.</button>
+                <button
+                  class="btn btn-regular btn-contrast-font btn-clear"
+                  data-operation="clear"
+                >
                   C
                 </button>
               </div>
             </div>
 
             <div class="right-container">
-              <button class="btn btn-oragne-bg btn-backspace">
+              <button class="btn btn-oragne-bg" data-operation="backspace">
                 <svg
                   class="btn-back-icon"
                   xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +140,12 @@
                 </div>
               </div>
 
-              <button class="btn btn-row btn-oragne-bg btn-equals">=</button>
+              <button
+                class="btn btn-row btn-oragne-bg btn-equals"
+                data-operation="equals"
+              >
+                =
+              </button>
             </div>
           </div>
           <div class="additional-operations-container">
